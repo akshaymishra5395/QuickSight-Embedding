@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Embed</title>
+    <script type="text/javascript" src="https://unpkg.com/amazon-quicksight-embedding-sdk@1.0.1/dist/quicksight-embedding-js-sdk.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+     <script type="text/javascript">
+
+         function onDashboardLoad(payload) {
+                console.log("Do something when the dashboard is fully loaded.");
+
+                var ResultDiv = document.getElementById("result");
+                var elem = document.createElement("img");
+                elem.setAttribute("src", "http://2.bp.blogspot.com/-XO_PcBeiYtY/VInQcgy6jhI/AAAAAAAAJto/MvdYWkPObns/s1600/the-lego-movie-awesome-e1392309318427.png");
+                elem.setAttribute("height", "768");
+               elem.setAttribute("width", "1024");
+                elem.setAttribute("alt", "Done");
+                ResultDiv.appendChild(elem)
+            }
+
+            function onError(payload) {
+                console.log("Do something when the dashboard fails loading");
+
+                var ResultDiv = document.getElementById("result");
+                var elem = document.createElement("img");
+                elem.setAttribute("src", "https://unowp.com/wp-content/uploads/2017/08/white-screen-of-death.png");
+                elem.setAttribute("height", "768");
+                elem.setAttribute("width", "1024");
+                elem.setAttribute("alt", "Error");
+                ResultDiv.appendChild("elem")
+            }
+
+        function embedDashboard(embedURL) {
+             var containerDiv = document.getElementById("dashboardContainer");
+             var params = {
+                url:embedURL,
+                container: containerDiv,
+                height: "700px",
+                width: "1000px"
+            };
+            var dashboard = QuickSightEmbedding.embedDashboard(params);
+            dashboard.on('error', onError);
+            dashboard.on('load', onDashboardLoad);
+        }
+
+	function embedDashboardOriginal(){
+              var gatewayApiUrl = "https://s3llmaeal5.execute-api.us-east-1.amazonaws.com/preprod/?role=READER&dashboardID=6c9266ba-9162-4bc2-8114-9d2bda61ea30&emailID=mihirlim&dashboardRegion=ap-southeast-2";
+                  $.ajax({
+                type: "GET",
+                url: gatewayApiUrl,
+                contentType: "application/json",
+                crossDomain: true,
+                success: function(data, status) {
+                    console.log(data);
+                    embedDashboard(data.EmbedUrl);
+                }
+                });
+        }
+    </script>
+</head>
+<body onload="embedDashboardOriginal()">
+    <div id="result"></div> 
+    <div id="dashboardContainer"></div>
+</body>
+</html>
