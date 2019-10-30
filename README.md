@@ -94,6 +94,12 @@
 ### 6. Attach policies created in step 5 to the lambda funciton execution role.
 
 
+### 7. Setup the lambda function using the code available at https://github.com/MihirLimbachia/QuickSightSamples/blob/master/QuickSightEmbeddingLambda/index.js
+
+
+    Modify the 
+
+
 
 
 
