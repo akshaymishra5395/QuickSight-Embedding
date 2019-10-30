@@ -1,10 +1,13 @@
 # QuickSight Embedding sample
 
+This repo focusses on setting up a serverless backend for dashboard embedding.
+
 Contains frontend starter page (index.html) that does not have any authentication mechanism.. 
 
-This is for demo purposes only. QuickSight does not support anonymous embedding.
+Only for testing the generated embed URL in frontend easily.
 
-User should setup his/her own authentication mechanism and route users to pages similar to index.html that contain the embedded dashboard.
+User should setup a frontend with an authentication mechanism and route users to pages similar to index.html that contain the embedded dashboard.
+
 
 ## Follow the below steps to set the backend that generates the Embed URL:
 
@@ -106,11 +109,93 @@ User should setup his/her own authentication mechanism and route users to pages 
         to arn of the role QsEmbedRole create in step 3.
 
 
-### 8. Setup the API gateway REST api that acts as a proxy for the above created lambda function.
+The lambda function expects following paramters as Query string parameters from the API gateway.
 
-    Detailed steps: 
+1. dashboardID 		    	
+2. dashboardRegion 			
+3. emailID 	(identifier of the user created in QuickSight)		
+4. role 	 (READER | ADMIN | AUTHOR )		
+5. userType   (IAM | QUICKSIGHT)			
+
+
+### 8. Setup API gateway API with a GET method that acts as a proxy for the above created lambda function.
+
+    Follow steps similar to ones mentioned in the below link: 
     
-    https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
+    https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html
+    
+    
+    
+###  9. Test out the above created api with the neccessary query string parameters:
+
+    https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-test-method.html
+
+    1. For IAM based identities (Creates a QuickSight user with user name <QsEmbedRole/>):
+    
+    role=READER&dashboardID=<dashboard ID>&emailID=<email id>&dashboardRegion=<dashboard region code (for eg. us-east-1)>&userType=IAM
+    
+    2.  For QuickSight based identities (A QuickSight user with the same name as email id should already be registered):
+    
+    role=READER&dashboardID=<dashboard ID>&emailID=<email id>&dashboardRegion=<dashboard region code (for eg. us-east-1)>&userType=QUICKSIGHT
+    
+    
+### 10.  Publish the API created in step 8 to a stage by following the steps mentioned in the below link:
+
+     https://docs.aws.amazon.com/apigateway/latest/developerguide/stages.html#how-to-create-stage-console
+     
+     
+### 11. Get the invoke URL for the GET API for the stage published in step 10.
+
+     https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-call-api.html#apigateway-how-to-call-rest-api
+     
+     
+### 12. Append the query string parameters to the invoke url retrieved in step 11.
+
+    <invoke URL>?role=READER&dashboardID=<dashboard ID>&emailID=<email id>&dashboardRegion=<dashboard region code (for eg. us-east-1)>&userType=IAM
+    
+
+## Now that the backend's ready.. lets tryout the API in a simple apache web page.
+
+### 1. Setup an EC2 instance with a security group that allows ssh and HTTPS traffic in its inbound rules.
+
+
+### 2. QuickSight requires the frontend webapp to have a valid CA signed certificate.  Hence, we need a domain and a certificate corresponding to it. Also once we have the certificate, we need to configure SSL in the apache web server with the generaeted certificate.
+
+       a. Get a free domain using the steps in the below article
+
+       https://medium.com/@kcabading/getting-a-free-domain-for-your-ec2-instance-3ac2955b0a2f 
+     
+       b. Generate a SSL certificate from https://www.sslforfree.com/. In order to verify domain ownership, you may 
+       setup the text records in the Route53 hosted zone setup in step 2.a
+     
+       c. Install and Configure Apache web server on the EC2 instance by following the steps in the below link:
+        
+          https://geekflare.com/apache-setup-ssl-certificate/
+          
+          The download link for apache is broken.. you may use wget http://mirrors.estointernet.in/apache//httpd/httpd-2.4.41.tar.gz
+           
+          For configuration only use: ./configure --enable-ssl
+          
+          If you face any errors during configuration.... refer https://geekflare.com/apache-installation-troubleshooting/
+          
+          Follow rest of the steps to the letter in the article..
+          
+### 15. Once the apache web server has been configured, lets setup a test index.html page that invokes the API.
+
+       a.  
+
+
+
+
+    
+    
+
+
+
+    
+
+
+
 
 
 
