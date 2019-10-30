@@ -1,8 +1,12 @@
-# QuickSightSamples
+# QuickSight Embedding sample
 
+Contains frontend starter page (index.html) that does not have any authentication mechanism.. 
 
-## Follow the below steps to set things up...:
+This is for demo purposes only. QuickSight does not support anonymous embedding.
 
+User should setup his/her own authentication mechanism and route users to pages similar to index.html that contain the embedded dashboard.
+
+## Follow the below steps to set the backend that generates the Embed URL:
 
 
 ### 1.  Create an IAM policy QsEmbedPolicyForIAMBasedIdentities that grants the following permissions:
@@ -96,8 +100,19 @@
 
 ### 7. Setup the lambda function using the code available at https://github.com/MihirLimbachia/QuickSightSamples/blob/master/QuickSightEmbeddingLambda/index.js
 
+        Set the AWS accont id in the lambda function https://github.com/MihirLimbachia/QuickSightSamples/blob/195887abcc5b436791d6df7564008ee51028c1c6/QuickSightEmbeddingLambda/index.js#L20
+        
+        Set the roleToAssume in the lambda function https://github.com/MihirLimbachia/QuickSightSamples/blob/195887abcc5b436791d6df7564008ee51028c1c6/QuickSightEmbeddingLambda/index.js#L21
+        to arn of the role QsEmbedRole create in step 3.
 
-    Modify the 
+
+### 8. Setup the API gateway REST api that acts as a proxy for the above created lambda function.
+
+    Detailed steps: 
+    
+    https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
+
+
 
 
 
