@@ -10,21 +10,22 @@ const StsClient = new AWS.STS();
 
 exports.handler = async (event) => {
     try {
-
+        console.log(event);
         const Role = event.queryStringParameters.role;
         const dashboardID = event.queryStringParameters.dashboardID;
         const emailID = event.queryStringParameters.emailID;
         const dashboardRegion = event.queryStringParameters.dashboardRegion;
         const userType = event.queryStringParameters.userType;
         console.log(userType, Role, dashboardID, emailID, dashboardRegion);
-
+        const accountID = '365032828610';
+        const roleToAssume = "arn:aws:iam::365032828610:role/LambdaQsDashboaradEmbedding";
         if (userType == 'IAM') {
 
             /* logic for IAM based identities */
 
             const StsAssumeRoleparams = {
                 DurationSeconds: 3600,
-                RoleArn: "arn:aws:iam::365032828610:role/LambdaQsDashboaradEmbedding",
+                RoleArn: roleToAssume,
                 RoleSessionName: emailID
             };
 
@@ -46,12 +47,12 @@ exports.handler = async (event) => {
             const QSClientForGeneratingDashboard = new AWS.QuickSight(QSClientForGeneratingDashboardOptions);
 
             let regUserparams = {
-                AwsAccountId: '365032828610', /* required */
+                AwsAccountId: accountID, /* required */
                 Email: emailID, /* required */
                 IdentityType: 'IAM',
                 Namespace: 'default', /* required */
                 UserRole: Role, /* required */
-                IamArn: 'arn:aws:iam::365032828610:role/LambdaQsDashboaradEmbedding',
+                IamArn: roleToAssume,
                 SessionName: emailID
             };
 
@@ -79,7 +80,7 @@ exports.handler = async (event) => {
             finally {
                 try {
                     let getDashboardParams = {
-                        AwsAccountId: '365032828610', /* required */
+                        AwsAccountId: accountID, /* required */
                         DashboardId: dashboardID, /* required */
                         IdentityType: 'IAM', /* required */
                         SessionLifetimeInMinutes: 600,
@@ -112,7 +113,10 @@ exports.handler = async (event) => {
             /* logic for QuickSight based identities */
             
         
-            const QSClientForGeneratingDashboard = new AWS.QuickSight({ region: dashboardRegion});
+            const QSClientForGeneratingDashboard = new AWS.Service({ 
+                apiConfig: require('./quicksight_latest_api.json'),
+                region: dashboardRegion
+                }); 
             let userArn;
             
             try {
@@ -120,7 +124,7 @@ exports.handler = async (event) => {
                 const QSClientForDescribeUser = new AWS.QuickSight({ region: 'us-east-1' });
 
                 let describeUserparams = {
-                    AwsAccountId: '365032828610', /* required */
+                    AwsAccountId: accountID, /* required */
                     Namespace: 'default', /* required */
                     UserName: emailID /* required */
                 };
@@ -151,7 +155,7 @@ exports.handler = async (event) => {
             finally {
                 try {
                     let getDashboardParams = {
-                        AwsAccountId: '365032828610', /* required */
+                        AwsAccountId: accountID, /* required */
                         DashboardId: dashboardID, /* required */
                         IdentityType: 'QUICKSIGHT', /* required */
                         UserArn: userArn
