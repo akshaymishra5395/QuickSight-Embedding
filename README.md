@@ -98,7 +98,7 @@ User should setup a frontend app with an authentication mechanism of his/her cho
 ### 6. Attach policies created in step 5 to the lambda funciton execution role.
 
 
-### 7. Setup the lambda function using the code available at https://github.com/MihirLimbachia/QuickSightSamples/blob/master/QuickSightEmbeddingLambda/index.js
+### 7. Setup the lambda function using the code available [here](https://github.com/MihirLimbachia/QuickSightSamples/blob/master/QuickSightEmbeddingLambda/index.js)
 
         Set the AWS accont id in the lambda function https://github.com/MihirLimbachia/QuickSightSamples/blob/195887abcc5b436791d6df7564008ee51028c1c6/QuickSightEmbeddingLambda/index.js#L20
         
