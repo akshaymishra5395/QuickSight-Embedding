@@ -1,6 +1,6 @@
 # QuickSight Embedding sample
 
-This repo focusses on setting up a serverless backend for dashboard embedding.
+This repo focuses on setting up a serverless backend for dashboard embedding.
 
 Contains frontend starter page (index.html) that does not have any authentication.. Only for testing the embed URL in frontend easily.
 
