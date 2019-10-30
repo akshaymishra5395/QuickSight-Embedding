@@ -100,11 +100,10 @@ User should setup a frontend app with an authentication mechanism of his/her cho
 
 ### 7. Setup the lambda function using the code available [here](https://github.com/MihirLimbachia/QuickSightSamples/blob/master/QuickSightEmbeddingLambda/index.js)
 
-        Set the AWS accont id in the lambda function https://github.com/MihirLimbachia/QuickSightSamples/blob/195887abcc5b436791d6df7564008ee51028c1c6/QuickSightEmbeddingLambda/index.js#L20
+        [Set the AWS accont id in the lambda function] (https://github.com/MihirLimbachia/QuickSightSamples/blob/195887abcc5b436791d6df7564008ee51028c1c6/QuickSightEmbeddingLambda/index.js#L20)
         
-        Set the roleToAssume in the lambda function https://github.com/MihirLimbachia/QuickSightSamples/blob/195887abcc5b436791d6df7564008ee51028c1c6/QuickSightEmbeddingLambda/index.js#L21
-        to arn of the role QsEmbedRole create in step 3.
-
+        [Set the roleToAssume in the lambda function] (https://github.com/MihirLimbachia/QuickSightSamples/blob/195887abcc5b436791d6df7564008ee51028c1c6/QuickSightEmbeddingLambda/index.js#L21
+        to arn of the role QsEmbedRole create in step 3 
 
 The lambda function expects following paramters as Query string parameters from the API gateway.
 
@@ -117,9 +116,9 @@ The lambda function expects following paramters as Query string parameters from 
 
 ### 8. Setup API gateway API with a GET method that acts as a proxy for the above created lambda function.
 
-    Follow steps similar to ones mentioned in the below link: 
+    Follow steps similar to ones mentioned in the [this link]: 
     
-    https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html
+    (https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html)
     
     
     
