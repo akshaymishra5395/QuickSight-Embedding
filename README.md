@@ -135,12 +135,12 @@ The lambda function expects following paramters as Query string parameters from 
     
 ### 10.  Publish the API created in step 8 to a stage by following the steps mentioned in the below link:
 
-     https://docs.aws.amazon.com/apigateway/latest/developerguide/stages.html#how-to-create-stage-console
+   https://docs.aws.amazon.com/apigateway/latest/developerguide/stages.html#how-to-create-stage-console
      
      
 ### 11. Get the invoke URL for the GET API for the stage published in step 10.
 
-     https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-call-api.html#apigateway-how-to-call-rest-api
+   https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-call-api.html#apigateway-how-to-call-rest-api
      
      
 ### 12. Append the query string parameters to the invoke url retrieved in step 11 and test the GET api in browser.
@@ -155,53 +155,51 @@ The lambda function expects following paramters as Query string parameters from 
 
 ### 2. QuickSight requires the frontend webapp to have a valid CA signed certificate.  Hence, we need a domain and a certificate corresponding to it. Also once we have the certificate, we need to configure SSL in the apache web server with the generaeted certificate.
 
-       a. Get a free domain using the steps in the below article
+   a. Get a free domain using the steps in the below article
 
-       https://medium.com/@kcabading/getting-a-free-domain-for-your-ec2-instance-3ac2955b0a2f 
+   https://medium.com/@kcabading/getting-a-free-domain-for-your-ec2-instance-3ac2955b0a2f 
      
-       b. Generate a SSL certificate from https://www.sslforfree.com/. Make sure to generate the certificate for a subdomain. For example, a.example.com
+   b. Generate a SSL certificate from (https://www.sslforfree.com/). Make sure to generate the certificate for a subdomain. For example, a.example.com
        
-       In order to verify domain ownership, you should setup the txt records in the Route53 hosted zone setup in step 2.a
+   In order to verify domain ownership, you should setup the txt records in the Route53 hosted zone setup in step 2.a
      
-       c. Install and Configure Apache web server on the EC2 instance by following the steps in the below link:
-        
-          https://geekflare.com/apache-setup-ssl-certificate/
+   c. Install and Configure Apache web server on the EC2 instance by following the steps in the below link:
           
-          The download link for apache is broken.. you may use wget http://mirrors.estointernet.in/apache//httpd/httpd-2.4.41.tar.gz
+   In order to download apache2, use wget http://mirrors.estointernet.in/apache//httpd/httpd-2.4.41.tar.gz
            
-          For configuration only use: ./configure --enable-ssl
+   For configuration, use ./configure --enable-ssl
           
-          If you face any errors during configuration.... refer https://geekflare.com/apache-installation-troubleshooting/
+   If you face any errors during configuration.... refer https://geekflare.com/apache-installation-troubleshooting/
           
-          Follow rest of the steps to the letter in the article..
+   Follow rest of the steps to the letter in [this article..](https://geekflare.com/apache-setup-ssl-certificate/)
           
 ### 3. Once the apache web server has been configured for SSL, lets setup a test index.html page that invokes the API.
 
-       a. Update the gatewayApiUrl in index.html
-       https://github.com/MihirLimbachia/QuickSightSamples/blob/f4c3e8660a8fdb6d27fe297422f53c11667748b5/index.html#L48
-           to  GET API invoke url from step 11.
+   a. Update the gatewayApiUrl in [index.html]
+    (https://github.com/MihirLimbachia/QuickSightSamples/blob/f4c3e8660a8fdb6d27fe297422f53c11667748b5/index.html#L48)
+     to  GET API invoke url from step 11.
            
-       b. Update the index.html page in the apache web browser.
+   b. Update the index.html page in the apache web browser.
           
-          cp index.html /usr/local/apache2/htdocs/
+      cp index.html /usr/local/apache2/htdocs/
            
-       c.  Start the apache web server.
+   c.  Start the apache web server.
        
-           cd /usr/local/apache2/bin
-           ./apachectl start
+      cd /usr/local/apache2/bin
+      ./apachectl start
            
 ### 4. Configure an A record in the route53 hosted zone with same name as the one for which we generated the SSL certificate. Set value for the record as the EC2 instance IP.
 
-       https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-creating.html
+   https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-creating.html
        
        
        
 ### 5. Whitelist the domain in the QuickSight account in the same region as the dashboard's region.
 
-       https://docs.aws.amazon.com/quicksight/latest/user/approve-domain-for-dashboard-embedding.html
+   https://docs.aws.amazon.com/quicksight/latest/user/approve-domain-for-dashboard-embedding.html
        
 ### 6. Make sure that the dashboard/s is/are shared with the QuickSight user/users who is/are using the embed url.
 
-       https://docs.aws.amazon.com/quicksight/latest/user/sharing-a-dashboard.html
+   https://docs.aws.amazon.com/quicksight/latest/user/sharing-a-dashboard.html
        
 # Hit the domain !!! 
