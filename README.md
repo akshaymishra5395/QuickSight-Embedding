@@ -207,4 +207,4 @@ The lambda function expects following paramters as Query string parameters from 
 
        https://docs.aws.amazon.com/quicksight/latest/user/sharing-a-dashboard.html
        
-# Hit the domain.. 
+# Hit the domain !!! 
