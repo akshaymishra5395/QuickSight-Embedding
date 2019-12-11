@@ -7,6 +7,9 @@
 const AWS = require('aws-sdk');
 const StsClient = new AWS.STS();
 
+function sleep (QSClientForGeneratingDashboard, time) {
+  return new Promise((QSClientForGeneratingDashboard) => setTimeout(QSClientForGeneratingDashboard, time));
+}
 
 exports.handler = async (event) => {
     try {
@@ -17,8 +20,8 @@ exports.handler = async (event) => {
         const dashboardRegion = event.queryStringParameters.dashboardRegion;
         const userType = event.queryStringParameters.userType;
         console.log(userType, Role, dashboardID, emailID, dashboardRegion);
-        const accountID = '<AccountID>';
-        const roleToAssume = "<IAM role created in step 3>";
+        const accountID = '365032828610';
+        const roleToAssume = "arn:aws:iam::365032828610:role/LambdaQsDashboaradEmbedding";
         if (userType == 'IAM') {
 
             /* logic for IAM based identities */
@@ -78,15 +81,22 @@ exports.handler = async (event) => {
                 }
             }
             finally {
-                try {
+                
+                
+                await sleep(QSClientForGeneratingDashboard,5000);
+   
+   
+                    try {
                     let getDashboardParams = {
                         AwsAccountId: accountID, /* required */
                         DashboardId: dashboardID, /* required */
                         IdentityType: 'IAM', /* required */
                         SessionLifetimeInMinutes: 600,
                     };
+                
                     let QSDashboardEmbedResponse = await QSClientForGeneratingDashboard.getDashboardEmbedUrl(getDashboardParams).promise();
 
+                    
                     let responseOk = {
                         statusCode: 200,
                         body: JSON.stringify(QSDashboardEmbedResponse),
@@ -106,6 +116,8 @@ exports.handler = async (event) => {
                     };
                     return response;
                 }
+
+
             }
 
         }
@@ -162,7 +174,14 @@ exports.handler = async (event) => {
                     };
                     
                     console.log(getDashboardParams);
+                    await sleep(QSClientForGeneratingDashboard,5000);
+
+                    
+                    
+                        console.log('here2');
+
                     let QSDashboardEmbedResponse = await QSClientForGeneratingDashboard.getDashboardEmbedUrl(getDashboardParams).promise();
+                  
 
                     let responseOk = {
                         statusCode: 200,
