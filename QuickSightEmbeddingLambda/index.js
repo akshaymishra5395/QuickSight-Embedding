@@ -17,11 +17,11 @@ exports.handler = async (event) => {
         const Role = event.queryStringParameters.role;
         const dashboardID = event.queryStringParameters.dashboardID;
         const emailID = event.queryStringParameters.emailID;
-        const dashboardRegion = event.queryStringParameters.dashboardRegion;
+        const dashboardRegion = event.queryStringParameters.dashboardRegion;itj
         const userType = event.queryStringParameters.userType;
         console.log(userType, Role, dashboardID, emailID, dashboardRegion);
-        const accountID = '365032828610';
-        const roleToAssume = "arn:aws:iam::365032828610:role/LambdaQsDashboaradEmbedding";
+        const accountID = '<Account ID>';
+        const roleToAssume = "<Embed Role>";
         if (userType == 'IAM') {
 
             /* logic for IAM based identities */
